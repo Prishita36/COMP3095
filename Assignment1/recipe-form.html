@@ -1,0 +1,37 @@
+<!DOCTYPE html> 
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> 
+ <!--  <#config timefmt="%m/%d/%Y %H:%M" > -->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+ <title>Save Recipe</title>
+  </head>
+  <body>
+  <div class="container">
+  <h3>Recipe Directory</h3>
+  <hr>
+  
+  <p class="h4 mb-4">Save Recipe</p>
+  <form action="" th:action="@{/recipes/save}" th:object="${addrecipe}" method="POST">
+ <!-- Add hidden form to update -->
+ <input type="hidden" th:field="*{recipeId}"/>
+ 
+  <input type="text" th:field="*{title}" class="form-control mb-4 col-4" placeholder="Recipe Title">
+  <input type="text" th:field="*{veg}" class="form-control mb-4 col-4" placeholder="Is Veg">
+  <input type="text" th:field="*{userLikeCount}" class="form-control mb-4 col-4" placeholder="No of User like">
+  <input type="text" th:field="*{ingredients}" class="form-control mb-4 col-4" placeholder="Ingredients">
+  <input type="text" th:field="*{instruction}" class="form-control mb-4 col-4" placeholder="Instructions">
+
+<button type="submit" class="btn btn-info col-2">Save</button>
+  
+  </form>
+  <hr>
+  <!-- <a href="http://localhost:8080/recipes">Back to Recipe List</a> -->
+  <a th:href="@{/recipes}">Back to Recipe List</a>
+  </div>
+  
+  </body>
+  </html>

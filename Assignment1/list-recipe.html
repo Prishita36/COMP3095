@@ -1,0 +1,103 @@
+<!DOCTYPE html> 
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> 
+ <!--  <#config timefmt="%m/%d/%Y %H:%M" > -->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+ <title>Recipes Details</title>
+  </head>
+  
+<body> 
+
+  
+  <div class="container">
+  <h3>Recipe Directory</h3>
+  <hr>
+<!--   <div>
+		User: <span sec:authentication="name"></span>
+		<br>
+		Role(s): <span sec:authentication="principal.authorities"></span>
+		<br><br>
+	</div> -->
+	
+	 <form th:action="@{/recipes/search}" class="form-inline">
+		 <a th:href="@{/recipes/showFormForAdd}" class="btn btn-primary btn-sm mb-3" >Add Recipe</a>
+
+		<input class="form-control  ml-5 mr-sm-2 mb-3" type="search" name="recipeId" placeholder="Search by recipeId" />
+
+		<button class="btn btn-success mb-3" type="submit">Search</button>
+    </form>	
+  <!-- Add a button -->
+ 
+  
+  <table class="table table-bordered table-striped">
+  <!--   <table class="timecard">  -->
+  
+    <thead class="thead-dark">
+        <tr> 
+            <th>Recipe ID</th> 
+            <th>Recipe Title</th> 
+            <th>Is Veg</th> 
+            <th>No of User like</th> 
+            <th>Ingredients</th> 
+            <th>Instructions</th> 
+            <th>Creation Time</th> 
+            <th>Action</th>
+        </tr> 
+        </thead>
+        <tbody>
+      
+        <tr th:each="testRecipe : ${recipeList}">
+        
+        <td th:text="${testRecipe.recipeId}"/>
+        <td th:text="${testRecipe.title}"/>
+        <td th:text="${testRecipe.Veg}"/>
+        <td th:text="${testRecipe.userLikeCount}"/>
+        <td th:text="${testRecipe.ingredients}"/>
+        <td th:text="${testRecipe.instruction}"/>
+        <td th:text="${testRecipe.recipeCreationDate} " />
+        <td>
+					<div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+
+						<!-- Add "update" button/link -->
+						<a th:href="@{/recipes/showFormForUpdate(recipeId=${testRecipe.recipeId})}"
+						   class="btn btn-info btn-sm">
+							Update
+						</a>
+
+					</div>					
+				
+					<div sec:authorize="hasRole('ROLE_ADMIN')">  
+					
+						<!-- Add "delete" button/link -->					
+						<a th:href="@{/recipes/delete(recipeId=${testRecipe.recipeId})}"
+						   class="btn btn-danger btn-sm"
+						   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+							Delete
+						</a>
+
+					</div>					
+				</td>
+				
+       <!--  <td>
+        <a th:href="@{/recipes/showFormForUpdate(recipeId=${testRecipe.recipeId})}" class="btn btn-info btn-sm">Update</a>
+         <a th:href="@{/recipes/delete(recipeId=${testRecipe.recipeId})}" class="btn btn-danger btn-sm " onclick="if(!(Confirm('Are you sure you want to delete this Recipe?'))) return false">Delete</a>
+        </td> -->
+        </tr>
+        </tbody>
+    </table> 
+    <!-- Add a logout button -->
+	<form action="#" th:action="@{/logout}" 
+			   method="POST">
+	
+		<input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+	
+	</form>
+	
+  </div>
+</body> 
+  
+</html> 
